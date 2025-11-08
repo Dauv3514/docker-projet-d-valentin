@@ -3,7 +3,7 @@ import db from './db.js';
 import cors from 'cors';
 
 const app = express();
-const port = 3000;
+const port = process.env.DB_PORT || 3000;
 app.use(cors());
 
 app.listen(port, () => {
