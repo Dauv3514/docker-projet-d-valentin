@@ -4,7 +4,7 @@
 
 - [🧩 Description](#-description)
 - [🚀 Lancer le projet](#-lancer-le-projet)
-- [🌍 Gestion des environnements](#-gestion-des-environnements)
+- [🌍 Gestion et réflexion sur les environnements](#-gestion-et-réflexion-sur-les-environnements)
 - [🔗 Liens utiles](#-liens-utiles)
 - [💬 Remarques](#-remarques)
 
@@ -27,6 +27,37 @@ L’application permet :
 ---
 
 ## 🚀 Lancer le projet
+
+### 🐳 Version Automatique (avec Docker)
+
+Cette version utilise **Docker Compose** pour lancer automatiquement :
+- le **backend Node.js**
+- la **base de données MySQL**
+- l’outil d’administration **Adminer**
+
+#### ⚙️ Prérequis
+- Docker et Docker Compose installés sur votre machine
+
+#### ▶️ Commandes
+
+1. **Cloner le dépôt**
+
+git clone https://github.com/Dauv3514/docker-projet-d-valentin
+
+2. **Configurer les variables d'environnement**
+
+cp backend/.env.dist backend/.env
+
+3. **Lancer les conteneurs en mode développement**
+
+docker-compose up -d
+
+4. **Accéder aux services**
+
+- Backend : http://localhost:8085/api/generate-names
+- Base de données (Adminer) : http://localhost:8086
+
+### Version Manuelle (sans Docker)
 
 ### Prérequis
 - Nodejs et npm installés
@@ -62,26 +93,71 @@ http://localhost:5173/
 # Backend API
 http://localhost:3001/api/generate-names
 
+#### ⚙️ Construire l’image du service web pour la future mise en production
+cd backend
+
+# Cette commande crée une image Docker prête à être déployée, nommée bandnamesgenerator:1.0.0.
+docker build -t bandnamesgenerator:1.0.0 .
+
 ---
 
-## 🌍 Gestion des environnements
+## 🌍 Gestion et réflexion sur les environnements
+
+### 🌍 Gestion des environnements
 
 | Élément                   | Développement                       | Production                   |
 | ------------------------- | ----------------------------------- | ---------------------------- |
 | Base de données           | MySQL local                         | MySQL distant ou cloud       |
 | Backend                   | localhost:3000                      | Serveur exposé (port 8085)   |
+| Outil d’administration    | **Adminer** sur port 8086           | ❌ Non déployé (sécurité)    |
 | Frontend                  | localhost:5173                      | Serveur web ou service cloud |
 | Variables d’environnement | `.env` local                        | `.env.prod` sécurisé         |
 | Données                   | Jeu de test (10 adjectifs, 10 noms) | Jeu complet ou réel          |
 | Logs                      | Console locale                      | Système de logs centralisé   |
 
-Lors du passage de l'environnement de développement à l'environnement de production :
+### 💭 Réflexion sur les environnements
 
-- La base de données utilise des identifiants sécurisés et phpMyAdmin n'est pas exposé.
-- Seul le service web est accessible publiquement, la base reste interne.
-- Les fichiers `.env` contiennent les vraies variables pour la production.
-- Les volumes MySQL sont persistants pour conserver les données.
-- Le logging est adapté : moins verbeux et centralisé.
+Lors du passage d’un environnement de **développement** à un environnement de **production**, plusieurs éléments doivent être adaptés :
+
+1. **Base de données**
+   - En développement : base MySQL locale, réinitialisable, avec un petit jeu de données de test.
+   - En production : base distante (serveur dédié ou cloud), sécurisée, avec des données réelles et persistantes.
+
+2. **Outils d’administration**
+   - En développement : utilisation d’un outil comme **Adminer** ou **phpMyAdmin** pour inspecter et modifier facilement la base.
+   - En production : ces outils ne sont **pas déployés** pour éviter les failles de sécurité.
+
+3. **Variables d’environnement**
+   - En développement : `.env` avec des valeurs simples ou par défaut (ex: `user`, `password`).
+   - En production : `.env.prod` (non versionné) contenant des credentials sécurisés et spécifiques au serveur.
+
+4. **Backend**
+   - En développement : lancé avec `nodemon` pour le rechargement automatique.
+   - En production : exécuté depuis une image Docker optimisée, sans `nodemon`.
+
+5. **Frontend**
+   - En développement : exécuté via `npm run dev` (serveur Vite avec hot reload).
+   - En production : build statique (`npm run build`) servi par un serveur web (NGINX, Apache ou autre).
+
+6. **Sécurité et réseau**
+   - En développement : ports exposés pour tester localement.
+   - En production : seule l’API et le frontend sont accessibles publiquement, la base reste privée.
+
+7. **Logs et performances**
+   - En développement : logs détaillés en console.
+   - En production : logs réduits, éventuellement stockés dans un service externe (CloudWatch, ELK…).
+
+En résumé, le passage en production implique de **sécuriser, optimiser et isoler** les services pour garantir stabilité et confidentialité.
+
+🔁 Transition entre les environnements
+
+Lors du passage du **développement** à la **production** :
+- Le service **Adminer** n’est **pas lancé** (réservé au dev).
+- La **base MySQL** est protégée et non exposée à l’extérieur.
+- Le **backend** est compilé et packagé dans une image (`bandnamesgenerator:1.0.0`).
+- Les **variables sensibles** (mots de passe, clés, etc.) sont stockées dans un `.env.prod` non versionné.
+- Les **volumes MySQL** assurent la persistance des données.
+- Le **logging** passe d’un affichage en console à un système plus sobre et sécurisé.
 
 ---
 
@@ -91,6 +167,8 @@ Lors du passage de l'environnement de développement à l'environnement de produ
 - [React](https://fr.react.dev/)
 - [Documentation Docker Compose](https://docs.docker.com/compose/)
 - [Image officielle MySQL](https://hub.docker.com/_/mysql)
+- [Image officielle Adminer](https://hub.docker.com/_/adminer)
+- [Image officielle Node.js](https://hub.docker.com/_/node)
 - [Référence du fichier Compose](https://docs.docker.com/reference/compose-file/)
 
 ---

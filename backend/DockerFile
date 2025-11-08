@@ -1,0 +1,17 @@
+# backend/Dockerfile
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copier package.json et installer nodemon pour le dev
+COPY package*.json ./
+RUN npm install
+RUN npm install -g nodemon
+
+# Copier le reste du code
+COPY . .
+
+EXPOSE 3001
+
+# Lancer le serveur avec nodemon pour le watch
+CMD ["nodemon", "--legacy-watch", "serveur.js"]

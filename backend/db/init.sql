@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS musicdb;
-USE musicdb;
+CREATE DATABASE IF NOT EXISTS bandnames;
+USE bandnames;
 
 CREATE TABLE adjectives (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -11,5 +11,28 @@ CREATE TABLE nouns (
   word VARCHAR(50) NOT NULL
 );
 
-INSERT INTO adjectives (word) VALUES ('Midnight'), ('Last'), ('Electric'), ('Silent');
-INSERT INTO nouns (word) VALUES ('Biscuits'), ('Llamas'), ('Dreamers'), ('Wolves');
+-- Insertion des adjectifs
+INSERT INTO adjectives (word) VALUES
+('Midnight'), 
+('Last'), 
+('Electric'), 
+('Silent'), 
+('Burning'), 
+('Crazy'), 
+('Golden'), 
+('Lonely'), 
+('Wild'), 
+('Happy');
+
+-- Insertion des noms
+INSERT INTO nouns (word) VALUES
+('Biscuits'), 
+('Llamas'), 
+('Dreamers'), 
+('Wolves'), 
+('Dragons'), 
+('Tigers'), 
+('Shadows'), 
+('Rockets'), 
+('Lions'), 
+('Pirates');

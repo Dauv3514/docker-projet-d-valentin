@@ -7,7 +7,7 @@ function App() {
 
   const generateNames = async () => {
     try {
-      const res = await axios.get('http://localhost:3000/api/generate-names');
+      const res = await axios.get('http://localhost:3001/api/generate-names');
       setNames(res.data);
     } catch (err) {
       console.error('Erreur lors de la génération des noms :', err);
