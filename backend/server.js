@@ -3,12 +3,25 @@ import db from './db.js';
 import cors from 'cors';
 
 const app = express();
-const port = process.env.DB_PORT || 3000;
+const port = 3001;
 app.use(cors());
 
-app.listen(port, () => {
-  console.log(`Serveur en écoute sur le port ${port}`);
-});
+const startServer = async () => {
+  try {
+    // Tentative de connexion à la base de données
+    await db.execute('SELECT 1');
+    console.log('Communication avec la base de données établie');
+    
+    app.listen(port, () => {
+      console.log(`Serveur en écoute sur le port ${port}`);
+    });
+  } catch (error) {
+    console.error('Impossible de se connecter à la base de données', error);
+    setTimeout(startServer, 5000);
+  }
+};
+
+startServer();
 
 // Route pour tester la connexion à la DB
 app.get('/', async (req, res) => {
