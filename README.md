@@ -122,15 +122,12 @@ npm run dev
 
 7. **Tester**
 
-# Frontend React
-http://localhost:5173/
-
-
-
-# Backend API
-http://localhost:3001/api/generate-names
+- Frontend React : http://localhost:5173/
 
 ![Frontend](frontend.png)
+
+- Backend API : http://localhost:3001/api/generate-names
+
 
 ### ⚙️ Construire l’image du service web pour la future mise en production
 
@@ -224,18 +221,18 @@ Lors du passage du **développement** à la **production** :
 
 ## 💬 Remarques
 
-J'ai décidé de ne pas conteneuriser le frontend React dans cette version du projet pour respecter les consignes demandées dans le devoir. Cependant, il est tout à fait envisageable de le faire pour une solution plus complète et cohérente. Le frontend React serait dispo sur 👉 http://localhost:8080
+J'ai décidé de ne pas conteneuriser le frontend React dans cette version du projet pour respecter les consignes demandées dans le devoir. Cependant, il est tout à fait envisageable de le faire pour une solution plus complète et cohérente. Le frontend React pourrait être disponible par exemple sur 👉 http://localhost:8080
 
 ### 🤔 Améliorations possibles
 
-1. **Conteneurisation du Frontend**
-   - Actuellement, seul le backend est conteneurisé avec Node.js
-   - Le frontend pourrait également être conteneurisé pour une solution complète
-   - Avantages potentiels :
-     - Cohérence de l'environnement de développement
-     - Déploiement simplifié
-     - Configuration unifiée via Docker Compose
-   - Possibilité d'utiliser NGINX pour servir le build React en production
+**Conteneurisation du Frontend**
+- Actuellement, seul le backend est conteneurisé avec Node.js
+- Le frontend pourrait également être conteneurisé pour une solution complète
+- Avantages potentiels :
+   - Cohérence de l'environnement de développement
+   - Déploiement simplifié
+   - Configuration unifiée via Docker Compose
+- Possibilité d'utiliser NGINX pour servir le build React en production
    
 ### 🛠️ Architecture actuelle vs Architecture possible
 
